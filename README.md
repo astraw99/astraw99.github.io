@@ -1,4 +1,6 @@
-## Welcome to GitHub Pages
+## Welcome to my personal pages, record work and life ^_^
+`2018-10-06`
+
 
 You can use the [editor on GitHub](https://github.com/astraw99/astraw99.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
