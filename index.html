@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hi my friend, welcome to me</title>
-</head>
-<body>
+---
+layout: default
+title: 我的Blog
+---
 
-<H3>
-    To record my personal work and life.
-</H3>
-<p>
-    eat less, do more...
-</p>
-
-</body>
-</html>
+　　<h2>{{ page.title }}</h2>
+　　<p>最新文章</p>
+　　
+<ul>
+    {% for post in site.posts %} 　　　
+    <li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %} 　
+</ul>
