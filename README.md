@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Welcome to my personal pages, record work and life ^_^
 `2018-10-06`
 
@@ -37,3 +38,7 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+=======
+# astraw99.github.io
+my personal pages, record work and life ^_^
+>>>>>>> 17e0dbabbaa6846b5e8d6c3f387bc8faf03ca63a
