@@ -5,15 +5,21 @@
   
 
   
-  <title>稻草人生</title>
+  <title>Go嵌套并发实现EDM，附坑点分析#1 | 稻草人生</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="稻草人生">
-<meta property="og:url" content="http://astraw.top/index.html">
+  <meta name="description" content="看着身边优秀的小伙伴们早就开始写博客，自己深感落后，还好迟做总比不做好，勉励自己见贤思齐。趁着年前最后一个周末，阳光正好，写下第一篇博客，为2019年开个头，以期完成今年为自己立下的flags。 从PHPer转Gopher，很大一个原因就是业务对性能和并发的持续需求，另一个主要原因就是Go语言原生的并发特性，可以在提供同等高可用的能力下，使用更少的机器资源，节约可观的成本。因此本文就结合自己在学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go嵌套并发实现EDM，附坑点分析#1">
+<meta property="og:url" content="http://astraw.top/2019/01/28/blog-1/index.html">
 <meta property="og:site_name" content="稻草人生">
+<meta property="og:description" content="看着身边优秀的小伙伴们早就开始写博客，自己深感落后，还好迟做总比不做好，勉励自己见贤思齐。趁着年前最后一个周末，阳光正好，写下第一篇博客，为2019年开个头，以期完成今年为自己立下的flags。 从PHPer转Gopher，很大一个原因就是业务对性能和并发的持续需求，另一个主要原因就是Go语言原生的并发特性，可以在提供同等高可用的能力下，使用更少的机器资源，节约可观的成本。因此本文就结合自己在学习">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/6925317-ba12da4661333423?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-27T16:16:31.677Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="稻草人生">
+<meta name="twitter:title" content="Go嵌套并发实现EDM，附坑点分析#1">
+<meta name="twitter:description" content="看着身边优秀的小伙伴们早就开始写博客，自己深感落后，还好迟做总比不做好，勉励自己见贤思齐。趁着年前最后一个周末，阳光正好，写下第一篇博客，为2019年开个头，以期完成今年为自己立下的flags。 从PHPer转Gopher，很大一个原因就是业务对性能和并发的持续需求，另一个主要原因就是Go语言原生的并发特性，可以在提供同等高可用的能力下，使用更少的机器资源，节约可观的成本。因此本文就结合自己在学习">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/6925317-ba12da4661333423?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternate" href="/atom.xml" title="稻草人生" type="application/atom+xml">
   
@@ -60,9 +66,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-blog-1" class="article article-type-post" itemscope="" itemprop="blogPost">
+        <section id="main"><article id="post-blog-1" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/28/blog-1/" class="article-date">
   <time datetime="2019-01-27T16:16:31.685Z" itemprop="datePublished">2019-01-28</time>
@@ -75,8 +79,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/28/blog-1/">Go嵌套并发实现EDM，附坑点分析#1</a>
+    <h1 class="article-title" itemprop="name">
+      Go嵌套并发实现EDM，附坑点分析#1
     </h1>
   
 
@@ -129,56 +133,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/10/07/hello-world/" class="article-date">
-  <time datetime="2018-10-06T18:03:32.003Z" itemprop="datePublished">2018-10-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/07/hello-world/">Hello World</a>
-    </h1>
+    <a href="/2018/10/07/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://astraw.top/2018/10/07/hello-world/" data-id="cjrf3yldt0000pqlz3zv9zzn8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-
 
 </section>
         
