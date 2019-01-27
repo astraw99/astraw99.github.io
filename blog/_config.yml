@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: My first post
+title: 稻草人生
 subtitle:
 description:
 keywords:
@@ -81,4 +81,4 @@ deploy:
   type: git
   repo: https://github.com/astraw99/astraw99.github.io.git
   branch: master
-  message: first post
+  message: astraw99's post
